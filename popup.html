@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyber">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PromptMinify</title>
+  <link rel="stylesheet" href="popup.css"/>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="icons/icon32.png" alt="PromptMinify" class="logo-icon"/>
+      <div class="logo-text">
+        <span class="logo-name">PromptMinify</span>
+        <span class="logo-tag">For Vibe Coders</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" title="Switch theme">
+        <span class="theme-icon-cyber">◈ CYBER</span>
+        <span class="theme-icon-classic">◇ CLASSIC</span>
+      </button>
+      <button class="settings-btn" id="settingsBtn" title="Settings">⚙</button>
+    </div>
+  </header>
+
+  <!-- Tabs -->
+  <nav class="tabs">
+    <button class="tab active" data-tab="analyze">Minify</button>
+    <button class="tab" data-tab="image">Image</button>
+    <button class="tab" data-tab="caption">Caption</button>
+    <button class="tab" data-tab="tracker">Tracker</button>
+    <button class="tab" data-tab="stats">Stats</button>
+  </nav>
+
+  <!-- ── MINIFY TAB ── -->
+  <div class="tab-content active" id="tab-analyze">
+    <div class="textarea-wrap">
+      <textarea id="promptInput" placeholder="Paste your prompt to minify and optimize…"></textarea>
+      <div class="char-counter"><span id="tokenCount">0</span> tkn</div>
+    </div>
+    <div class="action-row">
+      <button class="btn btn-primary" id="analyzeBtn"><span class="btn-icon">⚡</span> Auto-Minify</button>
+      <button class="btn btn-ai" id="aiRewriteBtn">🤖 AI Minify</button>
+      <button class="btn btn-ghost" id="clearBtn">✕</button>
+    </div>
+    <div class="api-notice" id="apiNotice" style="display:none">
+      <span>🔑 Add API key in</span>
+      <button class="notice-link" id="noticeSettingsBtn">Settings</button>
+      <span>for AI Minify</span>
+    </div>
+    <div class="result-panel" id="resultPanel" style="display:none">
+      <div class="result-header">
+        <span class="result-title" id="resultMode">Minified Prompt</span>
+        <div class="savings-badge" id="savingsBadge">0 tokens</div>
+      </div>
+      <div class="view-toggle">
+        <button class="vt-btn active" data-view="optimized">Minified</button>
+        <button class="vt-btn" data-view="diff">Changes</button>
+      </div>
+      <div class="result-text" id="resultText"></div>
+      <div class="diff-text" id="diffText" style="display:none"></div>
+      <div class="issues-list" id="issuesList"></div>
+      <div class="result-actions">
+        <button class="btn btn-accent" id="copyBtn">📋 Copy</button>
+        <button class="btn btn-ghost" id="injectBtn">⬆ Send to Page</button>
+        <button class="btn btn-ghost" id="useAsInputBtn">↩ Re-edit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── IMAGE TAB ── -->
+  <div class="tab-content" id="tab-image">
+    <div class="gen-header">
+      <div class="gen-icon img-icon">🖼</div>
+      <div>
+        <div class="gen-title">Image Prompt Builder</div>
+        <div class="gen-sub">Craft optimized prompts for AI image tools</div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label class="form-label">Platform</label>
+      <div class="platform-row" id="imgPlatform">
+        <button class="plat-btn active" data-p="midjourney">Midjourney</button>
+        <button class="plat-btn" data-p="dalle">DALL·E 3</button>
+        <button class="plat-btn" data-p="stable">Stable Diff</button>
+        <button class="plat-btn" data-p="ideogram">Ideogram</button>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label class="form-label">Subject / Scene</label>
+      <textarea class="form-textarea" id="imgSubject" placeholder="e.g. a lone astronaut standing on a barren silver planet, stars reflecting in visor…"></textarea>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-section">
+        <label class="form-label">Style</label>
+        <select class="form-select" id="imgStyle">
+          <option value="">None</option>
+          <option value="photorealistic">Photorealistic</option>
+          <option value="cinematic">Cinematic</option>
+          <option value="anime">Anime</option>
+          <option value="oil painting">Oil Painting</option>
+          <option value="watercolor">Watercolor</option>
+          <option value="3D render">3D Render</option>
+          <option value="pixel art">Pixel Art</option>
+          <option value="sketch">Sketch</option>
+          <option value="digital art">Digital Art</option>
+          <option value="minimalist">Minimalist</option>
+          <option value="concept art">Concept Art</option>
+          <option value="vector art">Vector Art</option>
+        </select>
+      </div>
+      <div class="form-section">
+        <label class="form-label">Mood / Lighting</label>
+        <select class="form-select" id="imgMood">
+          <option value="">None</option>
+          <option value="golden hour lighting">Golden Hour</option>
+          <option value="dramatic lighting">Dramatic</option>
+          <option value="soft diffused light">Soft Light</option>
+          <option value="neon glow">Neon Glow</option>
+          <option value="dark moody atmosphere">Dark &amp; Moody</option>
+          <option value="bright vibrant colors">Bright &amp; Vibrant</option>
+          <option value="cinematic fog and haze">Cinematic Fog</option>
+          <option value="studio lighting">Studio Light</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-section">
+        <label class="form-label">Aspect Ratio</label>
+        <select class="form-select" id="imgRatio">
+          <option value="">Default</option>
+          <option value="--ar 16:9">16:9 Landscape</option>
+          <option value="--ar 9:16">9:16 Portrait</option>
+          <option value="--ar 1:1">1:1 Square</option>
+          <option value="--ar 4:3">4:3 Standard</option>
+          <option value="--ar 3:2">3:2 Photo</option>
+          <option value="--ar 21:9">21:9 Ultrawide</option>
+        </select>
+      </div>
+      <div class="form-section">
+        <label class="form-label">Quality</label>
+        <select class="form-select" id="imgQuality">
+          <option value="">Default</option>
+          <option value="highly detailed, intricate">Highly Detailed</option>
+          <option value="ultra realistic, hyper detailed">Ultra Realistic</option>
+          <option value="8k resolution, sharp">8K Resolution</option>
+          <option value="sharp focus, professional">Sharp Focus</option>
+          <option value="shallow depth of field">Depth of Field</option>
+          <option value="HDR photography">HDR</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label class="form-label">Negative Prompt <span class="opt-label">optional</span></label>
+      <input class="form-input" id="imgNegative" placeholder="e.g. blurry, low quality, watermark, text, deformed…"/>
+    </div>
+
+    <div class="form-section">
+      <label class="form-label">Extra Keywords <span class="opt-label">optional</span></label>
+      <input class="form-input" id="imgExtra" placeholder="e.g. trending on artstation, award winning…"/>
+    </div>
+
+    <button class="btn btn-primary btn-full" id="buildImgPrompt"><span class="btn-icon">⚡</span> Build Image Prompt</button>
+
+    <div class="result-panel" id="imgResultPanel" style="display:none">
+      <div class="result-header">
+        <span class="result-title">🖼 Image Prompt</span>
+        <span class="savings-badge img-badge" id="imgTokenBadge">0 tokens</span>
+      </div>
+      <div class="result-text" id="imgResultText"></div>
+      <div class="result-actions">
+        <button class="btn btn-accent" id="copyImgBtn">📋 Copy</button>
+        <button class="btn btn-ghost" id="injectImgBtn">⬆ Send to Page</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CAPTION TAB ── -->
+  <div class="tab-content" id="tab-caption">
+    <div class="gen-header">
+      <div class="gen-icon cap-icon">✍</div>
+      <div>
+        <div class="gen-title">Caption Prompt Builder</div>
+        <div class="gen-sub">Build prompts for social captions &amp; copy</div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label class="form-label">Platform</label>
+      <div class="platform-row" id="capPlatform">
+        <button class="plat-btn active" data-p="instagram">Instagram</button>
+        <button class="plat-btn" data-p="twitter">X / Twitter</button>
+        <button class="plat-btn" data-p="linkedin">LinkedIn</button>
+        <button class="plat-btn" data-p="youtube">YouTube</button>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label class="form-label">Topic / Post About</label>
+      <textarea class="form-textarea" id="capTopic" placeholder="e.g. launching PromptMinify — a Chrome extension that cuts AI token usage for developers…"></textarea>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-section">
+        <label class="form-label">Tone</label>
+        <select class="form-select" id="capTone">
+          <option value="professional">Professional</option>
+          <option value="casual and friendly">Casual</option>
+          <option value="witty and humorous">Witty</option>
+          <option value="inspirational and motivating">Inspirational</option>
+          <option value="bold and direct">Bold</option>
+          <option value="storytelling narrative">Storytelling</option>
+          <option value="educational and informative">Educational</option>
+        </select>
+      </div>
+      <div class="form-section">
+        <label class="form-label">Goal</label>
+        <select class="form-select" id="capGoal">
+          <option value="maximum engagement and comments">Engagement</option>
+          <option value="drive clicks and website traffic">Drive Clicks</option>
+          <option value="brand awareness and reach">Brand Awareness</option>
+          <option value="product launch and excitement">Product Launch</option>
+          <option value="lead generation and signups">Lead Gen</option>
+          <option value="community building and discussion">Community</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-section">
+        <label class="form-label">Length</label>
+        <select class="form-select" id="capLength">
+          <option value="short (under 50 words)">Short</option>
+          <option value="medium (50-100 words)">Medium</option>
+          <option value="long (100-200 words)">Long</option>
+          <option value="thread / carousel format">Thread</option>
+        </select>
+      </div>
+      <div class="form-section">
+        <label class="form-label">Variants</label>
+        <select class="form-select" id="capVariants">
+          <option value="1 caption version">1 version</option>
+          <option value="3 different caption variants">3 variants</option>
+          <option value="5 different caption variants">5 variants</option>
+          <option value="A/B test pair (2 versions)">A/B pair</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label class="form-label">CTA <span class="opt-label">optional</span></label>
+      <input class="form-input" id="capCta" placeholder="e.g. Link in bio, Download free, Comment below…"/>
+    </div>
+
+    <div class="form-section toggle-section">
+      <div class="toggle-row">
+        <div>
+          <div class="form-label" style="margin-bottom:0">Include hashtag suggestions</div>
+          <div class="toggle-desc">Add 5–10 relevant hashtags</div>
+        </div>
+        <label class="mini-toggle"><input type="checkbox" id="capHashtags" checked/><span class="mini-slider"></span></label>
+      </div>
+      <div class="toggle-row">
+        <div>
+          <div class="form-label" style="margin-bottom:0">Include emoji</div>
+          <div class="toggle-desc">Add relevant emojis to caption</div>
+        </div>
+        <label class="mini-toggle"><input type="checkbox" id="capEmoji" checked/><span class="mini-slider"></span></label>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-full" id="buildCapPrompt"><span class="btn-icon">⚡</span> Build Caption Prompt</button>
+
+    <div class="result-panel" id="capResultPanel" style="display:none">
+      <div class="result-header">
+        <span class="result-title">✍ Caption Prompt</span>
+        <span class="savings-badge cap-badge" id="capTokenBadge">0 tokens</span>
+      </div>
+      <div class="result-text" id="capResultText"></div>
+      <div class="result-actions">
+        <button class="btn btn-accent" id="copyCapBtn">📋 Copy</button>
+        <button class="btn btn-ghost" id="injectCapBtn">⬆ Send to Page</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TRACKER TAB ── -->
+  <div class="tab-content" id="tab-tracker">
+    <div class="tracker-live">
+      <div class="live-dot-wrap"><span class="live-dot"></span><span class="live-label">Live Session</span></div>
+      <div class="tracker-big" id="liveTokens">0</div>
+      <div class="tracker-sub">tokens typed this session</div>
+    </div>
+
+    <!-- API Usage Limit Warning -->
+    <div class="api-limit-warning" id="apiLimitWarning" style="display:none">
+      <span class="warning-icon">⚠</span>
+      <span id="apiLimitMsg">API usage limit reached!</span>
+    </div>
+    <div class="cost-grid">
+      <div class="cost-card"><div class="cost-label">GPT-4o</div><div class="cost-val" id="costGpt4o">$0.0000</div><div class="cost-note">$5 / 1M tokens</div></div>
+      <div class="cost-card"><div class="cost-label">Claude Sonnet</div><div class="cost-val" id="costSonnet">$0.0000</div><div class="cost-note">$3 / 1M tokens</div></div>
+      <div class="cost-card"><div class="cost-label">GPT-4o Mini</div><div class="cost-val" id="costMini">$0.0000</div><div class="cost-note">$0.15 / 1M</div></div>
+      <div class="cost-card"><div class="cost-label">Claude Haiku</div><div class="cost-val" id="costHaiku">$0.0000</div><div class="cost-note">$0.25 / 1M</div></div>
+    </div>
+    <div class="tracker-meter-wrap">
+      <div class="meter-label-row">
+        <span class="section-label">Daily Token Budget</span>
+        <span class="meter-pct" id="budgetPct">0%</span>
+      </div>
+      <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+      <div class="budget-row">
+        <span class="budget-info" id="budgetInfo">0 / 10,000 tokens</span>
+        <button class="budget-edit" id="editBudget">Edit</button>
+      </div>
+    </div>
+
+    <div class="limit-section">
+      <div class="limit-header">
+        <span class="section-label">API Usage Limit</span>
+        <button class="budget-edit" id="editApiLimit">Edit</button>
+      </div>
+      <div class="limit-bar-wrap">
+        <div class="meter-track"><div class="meter-fill api-fill" id="apiLimitFill"></div></div>
+      </div>
+      <div class="budget-row">
+        <span class="budget-info" id="apiLimitInfo">0 / 100,000 tokens</span>
+        <span class="limit-pct" id="apiLimitPct">0%</span>
+      </div>
+    </div>
+    <div class="session-log-header">
+      <p class="section-label">Session Log</p>
+      <button class="btn btn-ghost btn-xs" id="resetSession">Reset</button>
+    </div>
+    <div class="session-log" id="sessionLog">
+      <div class="no-history">Start typing on any AI page to track tokens.</div>
+    </div>
+  </div>
+
+  <!-- ── STATS TAB ── -->
+  <div class="tab-content" id="tab-stats">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Minified</div></div>
+      <div class="stat-card accent"><div class="stat-num" id="statSaved">0</div><div class="stat-label">Tokens Saved</div></div>
+      <div class="stat-card"><div class="stat-num" id="statAvg">0%</div><div class="stat-label">Avg Reduction</div></div>
+      <div class="stat-card"><div class="stat-num" id="statToday">0</div><div class="stat-label">Saved Today</div></div>
+    </div>
+    <div class="history-section">
+      <p class="section-label">Recent History</p>
+      <div id="historyList" class="history-list"></div>
+    </div>
+    <button class="btn btn-ghost" id="clearStats" style="margin-top:10px;width:100%">Reset Stats</button>
+  </div>
+
+  <footer class="footer">
+    Created by <span class="footer-name">Dhanush D</span>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/Drdhx" target="_blank" class="footer-link">github.com/Drdhx</a>
+  </footer>
+</div>
+
+<!-- Budget Modal -->
+<div class="modal-overlay" id="budgetModal" style="display:none">
+  <div class="modal">
+    <div class="modal-title">Set Daily Token Budget</div>
+    <input class="input-field" id="budgetInput" type="number" placeholder="e.g. 50000" min="1000"/>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="saveBudget">Save</button>
+      <button class="btn btn-ghost" id="cancelBudget">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- API Limit Modal -->
+<div class="modal-overlay" id="apiLimitModal" style="display:none">
+  <div class="modal">
+    <div class="modal-title">Set Custom API Usage Limit</div>
+    <div class="modal-desc">Stop tracking & warn when total tokens typed reaches this limit.</div>
+    <input class="input-field" id="apiLimitInput" type="number" placeholder="e.g. 100000" min="1000"/>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="saveApiLimit">Save</button>
+      <button class="btn btn-ghost" id="cancelApiLimit">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>

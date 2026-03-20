@@ -1,0 +1,29 @@
+/* PromptMinify Content Styles — Premium Black/Silver */
+/* Creator: Dhanush D | github.com/Drdhx */
+
+#pm-badge{position:fixed;bottom:20px;right:20px;z-index:2147483646;cursor:pointer;font-family:'Segoe UI',system-ui,sans-serif;user-select:none}
+#pm-inner{display:flex;align-items:center;gap:7px;background:linear-gradient(145deg,#1a1a1c,#0f0f11);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:7px 14px;backdrop-filter:blur(16px);box-shadow:0 4px 24px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.06) inset;transition:all .2s}
+#pm-badge:hover #pm-inner{border-color:rgba(200,200,212,.28);box-shadow:0 6px 32px rgba(0,0,0,.8),0 0 20px rgba(200,200,212,.08);transform:translateY(-2px)}
+#pm-icon{font-size:13px}
+#pm-label{font-size:11px;font-weight:600;color:#c8c8d4;letter-spacing:.4px}
+#pm-tokens{font-size:10px;font-family:'Courier New',monospace;color:#c8c8d4;font-weight:700;background:rgba(200,200,212,.08);padding:1px 7px;border-radius:10px;border:1px solid rgba(255,255,255,.08)}
+
+#pm-panel{position:fixed;bottom:62px;right:20px;width:258px;background:#0f0f11;border:1px solid rgba(255,255,255,.12);border-radius:14px;z-index:2147483647;font-family:'Segoe UI',system-ui,sans-serif;box-shadow:0 12px 48px rgba(0,0,0,.9);overflow:hidden;animation:pmSlide .18s ease}
+@keyframes pmSlide{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.pm-header{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:linear-gradient(180deg,#161618,#0f0f11);border-bottom:1px solid rgba(255,255,255,.06);font-size:12px;font-weight:600;color:#c8c8d4;letter-spacing:.2px}
+.pm-close{background:none;border:none;color:#4a4a54;cursor:pointer;font-size:12px;padding:2px 6px;border-radius:5px}
+.pm-close:hover{color:#d8d8de;background:rgba(255,255,255,.05)}
+.pm-section{padding:10px 14px 0}
+.pm-label{font-size:9px;text-transform:uppercase;letter-spacing:.7px;color:#4a4a54;margin-bottom:3px;font-weight:600}
+.pm-big{font-family:'Courier New',monospace;font-size:20px;font-weight:700;color:#787882;line-height:1}
+.pm-big.hi{color:#c8c8d4}
+.pm-issues{padding:8px 14px;display:flex;flex-direction:column;gap:4px;min-height:18px}
+.pm-issue{font-size:10.5px;color:#4a4a54;background:rgba(255,255,255,.02);border-radius:5px;padding:4px 7px;border:1px solid rgba(255,255,255,.04)}
+.pm-actions{display:flex;gap:7px;padding:0 14px 10px}
+.pm-btn{flex:1;padding:7px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.1);background:#161618;color:#787882;transition:all .18s}
+.pm-btn:hover{border-color:rgba(255,255,255,.18);color:#d8d8de}
+.pm-btn.primary{background:linear-gradient(145deg,#2a2a2e,#1a1a1e);color:#eeeef4;border-color:rgba(255,255,255,.16);box-shadow:0 1px 0 rgba(255,255,255,.06) inset}
+.pm-btn.primary:hover{background:linear-gradient(145deg,#323236,#222226);transform:translateY(-1px)}
+.pm-footer{padding:6px 14px 10px;font-size:9px;color:#2e2e34;text-align:center}
+.pm-footer a{color:#4a4a54;text-decoration:none}
+.pm-footer a:hover{color:#787882}

@@ -1,0 +1,64 @@
+{
+  "manifest_version": 3,
+  "name": "PromptMinify",
+  "version": "1.0.0",
+  "description": "Minify AI prompts for vibe coding, image generation & captions — spend less tokens, get sharper results.",
+  "author": "Dhanush D",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "PromptMinify — Minify your AI prompts"
+  },
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://claude.ai/*",
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://cursor.sh/*",
+        "https://www.perplexity.ai/*",
+        "https://gemini.google.com/*",
+        "https://copilot.microsoft.com/*",
+        "https://midjourney.com/*",
+        "https://www.midjourney.com/*",
+        "https://ideogram.ai/*",
+        "https://leonardo.ai/*",
+        "https://firefly.adobe.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": ["storage", "activeTab", "scripting", "contextMenus"],
+  "commands": {
+    "open-popup": {
+      "suggested_key": { "default": "Alt+Shift+M" },
+      "description": "Open PromptMinify"
+    },
+    "auto-minify": {
+      "suggested_key": { "default": "Alt+Shift+A" },
+      "description": "Auto-Minify the active page prompt"
+    },
+    "copy-last": {
+      "suggested_key": { "default": "Alt+Shift+C" },
+      "description": "Copy last minified prompt"
+    }
+  },
+  "options_page": "options.html",
+  "web_accessible_resources": [
+    { "resources": ["icons/*"], "matches": ["<all_urls>"] }
+  ]
+}
