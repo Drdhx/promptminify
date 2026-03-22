@@ -9,34 +9,6 @@
 
 ---
 
-## 🖼 Screenshots
-
-### Theme Comparison — Classic vs Cyber
-
-![Theme Comparison](screenshots/00_theme_comparison.png)
-
-### ⚡ Minify Tab — Classic Theme
-
-![Classic Minify](screenshots/01_classic_minify.png)
-
-### ◈ Minify Tab — Cyber Theme
-
-![Cyber Minify](screenshots/02_cyber_minify.png)
-
-### 🖼 Image Prompt Builder
-
-![Image Builder](screenshots/03_image_builder.png)
-
-### ✍ Caption Prompt Builder
-
-![Caption Builder](screenshots/04_caption_builder.png)
-
-### 📊 Live Token Tracker
-
-![Tracker](screenshots/05_tracker.png)
-
----
-
 ## 🧩 What is PromptMinify?
 
 PromptMinify is a Chrome extension built **for vibe coders** — people who write long, conversational AI prompts while coding. It strips the bloat, rewrites your prompts to be leaner, and saves you real money on API bills.
@@ -57,6 +29,35 @@ PromptMinify is a Chrome extension built **for vibe coders** — people who writ
 - **🟢 Green / 🔴 Red Highlights** — Green border when optimized, red when no changes made
 - **📋 One-click Copy & Inject** — Push optimized prompt directly into the active AI chat textarea
 - **⭐ Custom Templates** — Save your own vibe coding prompt templates
+
+---
+
+## 🖼 Screenshots
+
+### ⚡ Minify Tab — Classic Theme
+
+![Classic Minify](screenshots/01_classic_minify.png)
+
+### ◈ Minify Tab — Cyber Theme
+
+![Cyber Minify](screenshots/02_cyber_minify.png)
+
+### Theme Comparison — Classic vs Cyber
+
+![Theme Comparison](screenshots/00_theme_comparison.png)
+
+
+### 🖼 Image Prompt Builder
+
+![Image Builder](screenshots/03_image_builder.png)
+
+### ✍ Caption Prompt Builder
+
+![Caption Builder](screenshots/04_caption_builder.png)
+
+### 📊 Live Token Tracker
+
+![Tracker](screenshots/05_tracker.png)
 
 ---
 
